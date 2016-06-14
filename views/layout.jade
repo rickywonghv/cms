@@ -1,0 +1,66 @@
+doctype html
+html
+  head
+    title= title
+    link(rel='stylesheet', href='/stylesheets/style.css')
+    link(rel='stylesheet', href='/bootstrap/css/bootstrap.css')
+    link(rel='stylesheet', href="/angular-material/angular-material.css")
+    script(src="/jquery/jquery.js")
+    script(src="/bootstrap/js/bootstrap.js")
+    script(src="/angular/angular.js")
+    script(src="/angular-aria/angular-aria.js")
+    script(src="/angular-animate/angular-animate.js")
+    script(src="/angular-material/angular-material.js")
+  body
+    nav.navbar.navbar-default
+      .container-fluid
+        // Brand and toggle get grouped for better mobile display
+        .navbar-header
+          button.navbar-toggle.collapsed(type='button', data-toggle='collapse', data-target='#bs-example-navbar-collapse-1', aria-expanded='false')
+            span.sr-only Toggle navigation
+            span.icon-bar
+            span.icon-bar
+            span.icon-bar
+          a.navbar-brand(href='/') Blog
+        // Collect the nav links, forms, and other content for toggling
+        #bs-example-navbar-collapse-1.collapse.navbar-collapse
+          ul.nav.navbar-nav
+            li.active
+              a(href='/admin')
+                | Home
+                span.sr-only (current)
+            li
+              a(href='/admin/post') Post
+            li.dropdown
+              a.dropdown-toggle(href='#', data-toggle='dropdown', role='button', aria-haspopup='true', aria-expanded='false')
+                | Content
+                span.caret
+              ul.dropdown-menu
+                li
+                  a(href='/admin/post') Post
+                li
+                  a(href='/admin/cat') Category
+                li
+                  a(href='#') Something else here
+                li.divider(role='separator')
+                li
+                  a(href='#') Separated link
+                li.divider(role='separator')
+                li
+                  a(href='#') One more separated link
+
+          ul.nav.navbar-nav.navbar-right
+            li.dropdown
+              a.dropdown-toggle(href='#', data-toggle='dropdown', role='button', aria-haspopup='true', aria-expanded='false')
+                | Dropdown
+                span.caret
+              ul.dropdown-menu
+                li
+                  a(href='/admin/profile') Profile
+                li
+                  a(href='/admin/chpwd') Change Password
+                li.divider(role='separator')
+                li
+                  a(href='/admin/logout') Logout
+    .container
+      block content
