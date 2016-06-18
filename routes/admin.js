@@ -9,4 +9,8 @@ router.get('/', function(req, res, next) {
     res.render('admin',{title:"Admin"})
 });
 
+router.get('/post', function(req, res, next) {
+    res.render('post',{title:"Admin"})
+});
+
 module.exports = router;

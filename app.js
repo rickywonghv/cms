@@ -4,6 +4,7 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var methodOverride = require('method-override');
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
@@ -23,6 +24,7 @@ require("./db");
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
+app.use(methodOverride());
 app.use(cookieParser());
 app.use('/angular',express.static(path.join(__dirname, '/node_modules/angular')));
 app.use('/angular-aria',express.static(path.join(__dirname, '/node_modules/angular-aria')));

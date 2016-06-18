@@ -9,6 +9,7 @@ var mongoose=require('mongoose');
 var check = require('check-types');
 var Admin= require("../model/auth.js");
 var Posts=require("../model/post.js");
+var Img=require("../model/upload.js");
 
 router.post('/login',function(req, res, next) {
     var username=req.body.username;
@@ -76,9 +77,75 @@ router.put('/chpwd',function(req,res){
     })
 });
 
-router.post('/addpost',function(req,res){
+router.post('/posts',function(req,res){
     var token=req.body.token;
-    Posts.AddPost({token:token},function(data){
+    var title=req.body.title;
+    var content=req.body.content;
+    var hashtag=req.body.hashtag;
+    Posts.AddPost({token:token,title:title,content:content,hashtag:hashtag},function(data){
+        res.json(data);
+    })
+});
+
+//Upload Image
+router.post('/upload/img',function(req,res){
+    Img.ImgUpload("photos",req,res,function (a) {
+        res.status(a.status).json(a);
+    })
+});
+//List all Images
+router.get('/img',function(req,res){
+    Img.ImgList(req.param('token'),function(data){
+        res.status(data.status).json(data);
+    })
+});
+//Show Image
+router.get('/img/:id',function(req,res,next){
+    Img.ImgShow(req.param('token'),req.params.id,function(data){
+        if(data.success){
+            res.header("Content-Type", data.data.mimetype);
+            //res.status(data.status).download(data.data.path, data.data.originalname);
+            res.status(data.status).sendfile(data.data.path);
+            //res.json(data);
+        }else{
+            res.status(data.status).json(data);
+        }
+    })
+});
+//Download Image
+router.get('/img/download/:id',function(req,res,next){
+    Img.ImgShow(req.param('token'),req.params.id,function(data){
+        if(data.success){
+            res.header("Content-Type", data.data.mimetype);
+            res.status(data.status).download(data.data.path, data.data.originalname);
+            //res.json(data);
+        }else{
+            res.status(data.status).json(data);
+        }
+    })
+});
+
+router.delete('/img/:id',function(req,res,next){
+    Img.ImgDel(req.param('token'),req.params.id,function(data){
+        if(data.success){
+            res.json(data);
+        }else{
+            res.json(data);
+        }
+    })
+});
+
+router.delete('/posts/:id',function(req,res){
+    var token=req.body.token;
+    var postId=req.params.id;
+    Posts.DelPost({token:token,id:postId},function(data){
+        res.json(data);
+    })
+});
+
+router.get('/posts',function(req,res){
+    var token=req.param('token');
+    Posts.ListPost({token:token},function(data){
         res.json(data);
     })
 });

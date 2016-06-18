@@ -3,3 +3,8 @@ extends layout
 block content
   h1= title
   p Welcome to #{title}
+  form(action="/admin/api/v1/upload/img",method="post",enctype="multipart/form-data")
+    input(type="file",name="photos")
+    button.btn.btn-info(type="submit") Upload
+
+  form(action="/admin/api/v1/posts",method="post")
